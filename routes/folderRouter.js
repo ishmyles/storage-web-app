@@ -1,4 +1,5 @@
 import { Router } from "express";
+import asyncWrapper from "express-async-handler";
 import {
   createNewFolder,
   deleteFolder,
@@ -11,18 +12,18 @@ import {
 
 const folderRouter = Router();
 
-folderRouter.get("/", displayUserFolders);
+folderRouter.get("/", asyncWrapper(displayUserFolders));
 
-folderRouter.get("/:folderId", displayFolderContents);
+folderRouter.get("/:folderId", asyncWrapper(displayFolderContents));
 
-folderRouter.get("/:folderId/new", displayNewFolderForm);
+folderRouter.get("/:folderId/new", asyncWrapper(displayNewFolderForm));
 
-folderRouter.post("/:folderId/new", createNewFolder);
+folderRouter.post("/:folderId/new", asyncWrapper(createNewFolder));
 
-folderRouter.get("/:folderId/update", displayUpdateFolderForm);
+folderRouter.get("/:folderId/update", asyncWrapper(displayUpdateFolderForm));
 
-folderRouter.post("/:folderId/update", updateFolderName);
+folderRouter.post("/:folderId/update", asyncWrapper(updateFolderName));
 
-folderRouter.post("/:folderId/delete", deleteFolder);
+folderRouter.post("/:folderId/delete", asyncWrapper(deleteFolder));
 
 export default folderRouter;

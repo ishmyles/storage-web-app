@@ -1,4 +1,5 @@
 import { Router } from "express";
+import asyncWrapper from "express-async-handler";
 import {
   displaySignupForm,
   signupUser,
@@ -8,6 +9,6 @@ const signupController = Router();
 
 signupController.get("/", displaySignupForm);
 
-signupController.post("/", signupUser);
+signupController.post("/", asyncWrapper(signupUser));
 
 export default signupController;

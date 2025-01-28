@@ -13,6 +13,8 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const _PORT = process.env.PORT || 3000;
 
+app.use(express.static(path.join(__dirname, "public")));
+
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
@@ -24,5 +26,10 @@ app.use("/files", fileRouter);
 app.get("/", (req, res) => res.render("index"));
 
 app.get("*", (req, res) => res.send("404 Error: File not found"));
+
+app.use((err, req, res, next) => {
+  console.error(err);
+  res.status(500).send("Internal Server Error: Something went wrong!");
+});
 
 app.listen(_PORT, () => console.log(`Server now listening at port ${_PORT}`));

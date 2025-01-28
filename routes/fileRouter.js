@@ -1,4 +1,5 @@
 import { Router } from "express";
+import asyncWrapper from "express-async-handler";
 import {
   addNewFile,
   deleteFile,
@@ -10,16 +11,16 @@ import {
 
 const fileRouter = Router();
 
-fileRouter.get("/new", displayAddFileForm);
+fileRouter.get("/new", asyncWrapper(displayAddFileForm));
 
-fileRouter.post("/new", addNewFile);
+fileRouter.post("/new", asyncWrapper(addNewFile));
 
-fileRouter.get("/:fileId", displayFileInfo);
+fileRouter.get("/:fileId", asyncWrapper(displayFileInfo));
 
-fileRouter.get("/:fileId/update", displayUpdateFilenameForm);
+fileRouter.get("/:fileId/update", asyncWrapper(displayUpdateFilenameForm));
 
-fileRouter.post("/:fileId/update", updateFilename);
+fileRouter.post("/:fileId/update", asyncWrapper(updateFilename));
 
-fileRouter.post("/:fileId/delete", deleteFile);
+fileRouter.post("/:fileId/delete", asyncWrapper(deleteFile));
 
 export default fileRouter;
