@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= locals.title %></title>
+    <link rel="stylesheet" href="/styles/form.css">
+</head>
+<body>
+    <%- include('partials/navbar'); %>
+    <h1><%= locals.title %></h1>
+    <form action="<%= locals.route %>" method="post">
+        <% if (locals.errors) { %>
+            <ul>
+                <% errors.forEach(err => {  %>
+                    <li><%= err.msg %></li>
+                <% }); %>
+            </ul>
+        <% } %>
+        <div class="form-row">
+            <label for="username">Username</label>
+            <input type="text" name="username" id="username">
+        </div>
+        <div class="form-row">
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password">
+        </div>
+        <%if (locals.route === "/signup") { %>
+            <div class="form-row">
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="password" name="confirmPassword" id="confirmPassword">
+            </div>
+            <button type="submit">Sign up</button>
+        <% } else { %>
+            <button type="submit">Login</button>
+        <% } %>
+    </form>
+</body>
+</html>

@@ -13,6 +13,8 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const _PORT = process.env.PORT || 3000;
 
+app.use(express.urlencoded({ extended: true }));
+
 app.use(express.static(path.join(__dirname, "public")));
 
 app.set("view engine", "ejs");

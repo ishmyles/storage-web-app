@@ -1,16 +1,56 @@
-export const displayAddFileForm = (req, res) =>
-  res.send("TODO: Add new file form");
+import { validationResult } from "express-validator";
 
-export const addNewFile = (req, res) =>
-  res.send("TODO: Add file to cloudinary & save link to DB");
+export const displayAddFileForm = (req, res) => {
+  // TODO: Get the folderIds for the select options
+  // TODO: Validate the owner of the parent folder belongs to the user
+  return res.render("folderFile", {
+    title: "Add",
+    type: "filename",
+    route: `/files/new`,
+  });
+};
+
+export const addNewFile = (req, res) => {
+  // TODO: Validate the owner of the parent folder belongs to the user
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    return res.render("folderFile", {
+      title: "Add",
+      type: "filename",
+      route: `/files/new`,
+      errors: errors.array(),
+    });
+  }
+  return res.send("TODO: Add file to cloudinary & save link to DB");
+};
 
 export const displayFileInfo = (req, res) =>
   res.send("TODO: Show file meta data");
 
-export const displayUpdateFilenameForm = (req, res) =>
-  res.send("TODO: Update file name form");
+export const displayUpdateFilenameForm = (req, res) => {
+  // const id = getFile(); // TODO: change this to id from DB query
+  // if (!id) res.render("notfound");
+  return res.render("folderFile", {
+    title: "Update",
+    type: "filename",
+    route: `/files/${req.params.fileId}/update`,
+  });
+};
 
-export const updateFilename = (req, res) =>
-  res.send("TODO: Form data to be saved to DB");
+export const updateFilename = (req, res) => {
+  // TODO: Need to validate the user updating the form is the owner
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    return res.render("folderFile", {
+      title: "Update",
+      type: "filename",
+      route: `/files/${req.params.fileId}/update`,
+      errors: errors.array(),
+    });
+  }
+  return res.send("TODO: Form data to be saved to DB");
+};
 
 export const deleteFile = (req, res) => res.send("TODO: Delete file from DB");

@@ -8,18 +8,23 @@ import {
   displayUpdateFilenameForm,
   updateFilename,
 } from "../controllers/fileController.js";
+import { filenameValidator } from "../utils/formvalidators.js";
 
 const fileRouter = Router();
 
 fileRouter.get("/new", asyncWrapper(displayAddFileForm));
 
-fileRouter.post("/new", asyncWrapper(addNewFile));
+fileRouter.post("/new", filenameValidator, asyncWrapper(addNewFile));
 
 fileRouter.get("/:fileId", asyncWrapper(displayFileInfo));
 
 fileRouter.get("/:fileId/update", asyncWrapper(displayUpdateFilenameForm));
 
-fileRouter.post("/:fileId/update", asyncWrapper(updateFilename));
+fileRouter.post(
+  "/:fileId/update",
+  filenameValidator,
+  asyncWrapper(updateFilename)
+);
 
 fileRouter.post("/:fileId/delete", asyncWrapper(deleteFile));
 
