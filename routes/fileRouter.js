@@ -1,5 +1,6 @@
 import { Router } from "express";
 import asyncWrapper from "express-async-handler";
+import upload from "../utils/multerUpload.js";
 import {
   addNewFile,
   deleteFile,
@@ -14,7 +15,7 @@ const fileRouter = Router();
 
 fileRouter.get("/new", asyncWrapper(displayAddFileForm));
 
-fileRouter.post("/new", filenameValidator, asyncWrapper(addNewFile));
+fileRouter.post("/new", upload.single("upload_file"), asyncWrapper(addNewFile));
 
 fileRouter.get("/:fileId", asyncWrapper(displayFileInfo));
 

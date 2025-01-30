@@ -5,21 +5,19 @@ export const displayAddFileForm = (req, res) => {
   // TODO: Validate the owner of the parent folder belongs to the user
   return res.render("folderFile", {
     title: "Add",
-    type: "filename",
+    type: "file",
     route: `/files/new`,
   });
 };
 
 export const addNewFile = (req, res) => {
   // TODO: Validate the owner of the parent folder belongs to the user
-  const errors = validationResult(req);
-
-  if (!errors.isEmpty()) {
+  if (!req.file) {
     return res.render("folderFile", {
       title: "Add",
-      type: "filename",
+      type: "file",
       route: `/files/new`,
-      errors: errors.array(),
+      errors: [{ msg: "Attach a file to add" }],
     });
   }
   return res.send("TODO: Add file to cloudinary & save link to DB");

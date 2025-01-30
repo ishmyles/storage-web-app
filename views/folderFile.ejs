@@ -9,7 +9,7 @@
 <body>
     <%- include('partials/navbar'); %>
     <h1><%= locals.title %> <%= locals.type %></h1>
-    <form action="<%= locals.route %>" method="post">
+    <form action="<%= locals.route %>" enctype="multipart/form-data" method="post">
         <% if (locals.errors) { %>
             <ul>
                 <% errors.forEach(err => { %>
@@ -17,14 +17,18 @@
                 <% }); %>
             </ul>
         <% } %>
-        <div class="form-row">
-            <label for="<%= locals.type %>"><%= locals.type %></label>
-            <input type="text" name="<%= locals.type %>" id="<%= locals.type %>">
-        </div>
         <% if (title === "Add") { %>
-        <button type="submit">Add</button>
+            <div class="form-row">
+                <label for="upload_file">Attach file:</label>
+                <input type="file" name="upload_file" id="upload_file">
+            </div>
+            <button type="submit">Add</button>
         <% } else { %>
-        <button type="submit">Update</button>
+            <div class="form-row">
+                <label for="<%= locals.type %>"><%= locals.type %></label>
+                <input type="text" name="<%= locals.type %>" id="<%= locals.type %>">
+            </div>
+            <button type="submit">Update</button>
         <% } %>
     </form>
 </body>
