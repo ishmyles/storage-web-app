@@ -1,7 +1,15 @@
 <header>
     <ul>
         <li><a href="/">HOME</a></li>
-        <li><a href="/signup">SIGN UP</a></li>
-        <li><a href="/login">LOGIN</a></li>
+    </ul>
+    <ul>
+        <% if (locals.isLoggedIn) { %>
+            <form action="/logout" method="post">
+                <button type="submit">LOGOUT</button>
+            </form>
+        <% } else { %>
+            <li><a href="/signup">SIGN UP</a></li>
+            <li><a href="/login">LOGIN</a></li>
+        <% }%>
     </ul>
 </header>

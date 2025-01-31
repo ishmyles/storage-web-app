@@ -1,7 +1,8 @@
 import { validationResult } from "express-validator";
 
-export const displayUserFolders = (req, res) =>
-  res.send("TODO: Show all folders associated with user");
+export const displayUserFolders = (req, res) => {
+  res.render("folderView");
+};
 
 export const displayFolderContents = (req, res) =>
   res.send("TODO: Show folder content");

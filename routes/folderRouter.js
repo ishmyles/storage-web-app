@@ -10,29 +10,48 @@ import {
   updateFolderName,
 } from "../controllers/folderController.js";
 import { foldernameValidator } from "../utils/formvalidators.js";
+import { isAuthenticated } from "../utils/middleware.js";
 
 const folderRouter = Router();
 
-folderRouter.get("/", asyncWrapper(displayUserFolders));
+folderRouter.get("/", isAuthenticated, asyncWrapper(displayUserFolders));
 
-folderRouter.get("/:folderId", asyncWrapper(displayFolderContents));
+folderRouter.get(
+  "/:folderId",
+  isAuthenticated,
+  asyncWrapper(displayFolderContents)
+);
 
-folderRouter.get("/:folderId/new", asyncWrapper(displayNewFolderForm));
+folderRouter.get(
+  "/:folderId/new",
+  isAuthenticated,
+  asyncWrapper(displayNewFolderForm)
+);
 
 folderRouter.post(
   "/:folderId/new",
   foldernameValidator,
+  isAuthenticated,
   asyncWrapper(createNewFolder)
 );
 
-folderRouter.get("/:folderId/update", asyncWrapper(displayUpdateFolderForm));
+folderRouter.get(
+  "/:folderId/update",
+  isAuthenticated,
+  asyncWrapper(displayUpdateFolderForm)
+);
 
 folderRouter.post(
   "/:folderId/update",
   foldernameValidator,
+  isAuthenticated,
   asyncWrapper(updateFolderName)
 );
 
-folderRouter.post("/:folderId/delete", asyncWrapper(deleteFolder));
+folderRouter.post(
+  "/:folderId/delete",
+  isAuthenticated,
+  asyncWrapper(deleteFolder)
+);
 
 export default folderRouter;

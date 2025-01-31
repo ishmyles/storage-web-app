@@ -10,23 +10,34 @@ import {
   updateFilename,
 } from "../controllers/fileController.js";
 import { filenameValidator } from "../utils/formvalidators.js";
+import { isAuthenticated } from "../utils/middleware.js";
 
 const fileRouter = Router();
 
-fileRouter.get("/new", asyncWrapper(displayAddFileForm));
+fileRouter.get("/new", isAuthenticated, asyncWrapper(displayAddFileForm));
 
-fileRouter.post("/new", upload.single("upload_file"), asyncWrapper(addNewFile));
+fileRouter.post(
+  "/new",
+  isAuthenticated,
+  upload.single("upload_file"),
+  asyncWrapper(addNewFile)
+);
 
-fileRouter.get("/:fileId", asyncWrapper(displayFileInfo));
+fileRouter.get("/:fileId", isAuthenticated, asyncWrapper(displayFileInfo));
 
-fileRouter.get("/:fileId/update", asyncWrapper(displayUpdateFilenameForm));
+fileRouter.get(
+  "/:fileId/update",
+  isAuthenticated,
+  asyncWrapper(displayUpdateFilenameForm)
+);
 
 fileRouter.post(
   "/:fileId/update",
   filenameValidator,
+  isAuthenticated,
   asyncWrapper(updateFilename)
 );
 
-fileRouter.post("/:fileId/delete", asyncWrapper(deleteFile));
+fileRouter.post("/:fileId/delete", isAuthenticated, asyncWrapper(deleteFile));
 
 export default fileRouter;
