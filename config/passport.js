@@ -1,17 +1,18 @@
 import { Strategy } from "passport-local";
 import bcrypt from "bcryptjs";
-import db from "../db/poolConnection.js";
+import { PrismaClient } from "@prisma/client";
+
+const prisma = new PrismaClient();
 
 const LocalStrategy = Strategy;
 
 const verify = async (username, password, done) => {
   try {
-    const { rows } = await db.query(
-      "SELECT * FROM Users WHERE username = $1;",
-      [username]
-    );
-
-    const user = rows[0];
+    const user = await prisma.user.findUnique({
+      where: {
+        username: username,
+      },
+    });
 
     if (!user)
       return done(null, false, { message: "Incorrect username or password." });
@@ -37,11 +38,11 @@ export default (passport) => {
 
   passport.deserializeUser(async (username, done) => {
     try {
-      const { rows } = await db.query(
-        "SELECT username FROM Users WHERE username = $1",
-        [username]
-      );
-      const user = rows[0];
+      const user = await prisma.user.findUnique({
+        where: {
+          username: username,
+        },
+      });
 
       done(null, user);
     } catch (err) {

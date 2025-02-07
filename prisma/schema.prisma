@@ -1,0 +1,47 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  username String   @id
+  password String
+  folders  Folder[]
+  files    File[]
+}
+
+model Folder {
+  id           String   @id @default(uuid())
+  name         String
+  createdAt    DateTime @default(now())
+  parentId     String?
+  files        File[]
+  parentFolder Folder?  @relation("ParentSubfolder", fields: [parentId], references: [id], onDelete: Cascade)
+  subfolders   Folder[] @relation("ParentSubfolder")
+  ownerId      String
+  owner        User     @relation(fields: [ownerId], references: [username], onDelete: Cascade)
+}
+
+model File {
+  id       Int      @id @default(autoincrement())
+  folderId String
+  name     String
+  size     Int
+  filePath String
+  addedAt  DateTime @default(now())
+  folder   Folder   @relation(fields: [folderId], references: [id], onDelete: Cascade)
+  ownerId  String
+  owner    User     @relation(fields: [ownerId], references: [username], onDelete: Cascade)
+}
+
+model UserSession {
+  sid    String   @id(map: "session_pkey") @db.VarChar
+  sess   Json     @db.Json
+  expire DateTime @db.Timestamp(6)
+
+  @@index([expire], map: "IDX_session_expire")
+}

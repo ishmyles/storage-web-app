@@ -12,6 +12,7 @@ export const displayAddFileForm = (req, res) => {
 
 export const addNewFile = (req, res) => {
   // TODO: Validate the owner of the parent folder belongs to the user
+  console.log(req.file);
   if (!req.file) {
     return res.render("folderFile", {
       title: "Add",
