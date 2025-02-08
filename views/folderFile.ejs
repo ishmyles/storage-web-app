@@ -9,27 +9,50 @@
 <body>
     <%- include('partials/navbar'); %>
     <h1><%= locals.title %> <%= locals.type %></h1>
-    <form action="<%= locals.route %>" enctype="multipart/form-data" method="post">
-        <% if (locals.errors) { %>
-            <ul>
-                <% errors.forEach(err => { %>
-                    <li><%= err.msg %></li>
-                <% }); %>
-            </ul>
-        <% } %>
-        <% if (title === "Add") { %>
+    <% if (locals.title === "Add" && locals.type === "file") { %>
+        <form action="<%= locals.route %>" enctype="multipart/form-data" method="post">
+            <% if (locals.errors) { %>
+                <ul>
+                    <% errors.forEach(err => { %>
+                        <li><%= err.msg %></li>
+                    <% }); %>
+                </ul>
+            <% } %>
+            <% if (locals.folders) {%>
+                <div class="form-row">
+                    <label for="parent_folder">Select Folder:</label>
+                    <select name="parent_folder" id="parent_folder">
+                        <%  locals.folders.forEach(folder => { %>
+                            <option value="<%= folder.id %>"><%= folder.name %></option>
+                        <% }); %>
+                    </select>
+                </div>
+            <% } %>
             <div class="form-row">
                 <label for="upload_file">Attach file:</label>
                 <input type="file" name="upload_file" id="upload_file">
             </div>
             <button type="submit">Add</button>
-        <% } else { %>
+        </form>
+    <% } else { %>
+        <form action="<%= locals.route %>" method="post">
+            <% if (locals.errors) { %>
+                <ul>
+                    <% errors.forEach(err => { %>
+                        <li><%= err.msg %></li>
+                    <% }); %>
+                </ul>
+            <% } %>
             <div class="form-row">
                 <label for="<%= locals.type %>"><%= locals.type %></label>
-                <input type="text" name="<%= locals.type %>" id="<%= locals.type %>">
+                <input type="text" name="<%= locals.type %>" id="<%= locals.type %>" value="<%= locals.foldername %>">
             </div>
-            <button type="submit">Update</button>
-        <% } %>
-    </form>
+            <% if (locals.title === "Add") { %>
+                <button type="submit">Add</button>
+            <% } else { %>
+                <button type="submit">Update</button>
+            <% } %>
+        </form>
+    <% } %>
 </body>
 </html>
