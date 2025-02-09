@@ -6,8 +6,13 @@
         <title><%= locals.file.name %></title>
 </head>
 <body>
+    <%- include('partials/navbar') %>
+    <% if (locals.prevFolder) { %>
+        <a href="/folders/<%= locals.prevFolder %>">Back</a>
+    <% } %>
     <h1><%= locals.file.name %></h1>
     <p><b>Filetype: </b>.<%= locals.file.fileType %></p>
     <p><b>Size: </b><%= locals.file.size / 1000 %> mb</p>
+    <a href="/files/<%= locals.file.id %>/update">Update</a>
 </body>
 </html>

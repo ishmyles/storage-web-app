@@ -8,6 +8,9 @@
 </head>
 <body>
     <%- include('partials/navbar'); %>
+    <% if (locals.prevFolder) { %>
+        <a href="/folders/<%= locals.prevFolder %>">Back</a>
+    <% } %>
     <h1><%= locals.title %> <%= locals.type %></h1>
     <% if (locals.title === "Add" && locals.type === "file") { %>
         <form action="<%= locals.route %>" enctype="multipart/form-data" method="post">

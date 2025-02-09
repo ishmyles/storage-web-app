@@ -4,7 +4,8 @@
     </ul>
     <ul>
         <% if (locals.isLoggedIn) { %>
-            <form action="/logout" method="post">
+            <a href="/folders">Folders</a>
+            <form action="/logout" method="post" style="display: block; margin-top: 10px; margin-left: 0;">
                 <button type="submit">LOGOUT</button>
             </form>
         <% } else { %>

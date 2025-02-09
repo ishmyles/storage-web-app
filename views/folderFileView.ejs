@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Folders</title>
+    <link rel="stylesheet" href="/styles/fileFolder.css">
+</head>
+<body>
+    <%- include('partials/navbar') %>
+    <% if (locals.prevFolder) { %>
+        <a href="/folders/<%= locals.prevFolder %>">Back</a>
+    <% } %>
+    <% if (locals.currentFolder) { %>
+        <h1><%= locals.currentFolder.name %></h1>
+        <ul>
+            <li><a href="/folders/<%= locals.currentFolder.id %>/update">Update Foldername</a></li>
+            <li><a href="/folders/<%= locals.currentFolder.id %>/new">Add Folder</a></li>
+            <li><a href="/files/<%= locals.currentFolder.id %>/new">Add Folder</a></li>
+        </ul>
+    <% } %>
+    <% if (locals.folders) {%>
+        <div class="container">
+            <% locals.folders.forEach(folder => { %>
+                <div class="folder-item">
+                    <a href="/folders/<%= folder.id %>">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height="70px" width="70px"><title>folder</title><path d="M10,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V8C22,6.89 21.1,6 20,6H12L10,4Z" /></svg>
+                        <p><%= folder.name %></p>
+                    </a>
+                </div>
+            <% }); %>
+            <% if (locals.files) { %>
+                <% locals.files.forEach(file => { %>
+                    <div class="folder-item">
+                        <a href="/files/<%= file.id %>">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height="70px" width="70px"><title>file</title><path d="M6,2A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2H6M6,4H13V9H18V20H6V4M8,12V14H16V12H8M8,16V18H13V16H8Z" /></svg>
+                            <p><%= file.name %></p>
+                        </a>
+                    </div>
+                <% }); %>
+            <% } %>
+        </div>
+    <% } %>
+</body>
+</html>
