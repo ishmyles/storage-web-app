@@ -37,7 +37,7 @@ export const displayNewFolderForm = async (req, res) => {
   });
 };
 
-export const createNewFolder = async (req, res) => {
+export const createNewFolder = async (req, res, next) => {
   const parentId = req.params.folderId;
   const errors = validationResult(req);
 
@@ -76,7 +76,7 @@ export const displayUpdateFolderForm = async (req, res) => {
   });
 };
 
-export const updateFolderName = async (req, res) => {
+export const updateFolderName = async (req, res, next) => {
   const parentId = req.params.folderId;
   const errors = validationResult(req);
 
@@ -102,6 +102,6 @@ export const updateFolderName = async (req, res) => {
 };
 
 export const deleteFolder = async (req, res) => {
-  await deleteFolderData(req.params.id);
+  await deleteFolderData(req.params.folderId);
   return res.redirect("/folders");
 };

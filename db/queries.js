@@ -1,5 +1,6 @@
 import bcrypt from "bcryptjs";
 import { PrismaClient } from "@prisma/client";
+import { console } from "inspector";
 
 const _SALT = Number(process.env.SALT);
 
@@ -156,5 +157,5 @@ export const deleteFileData = async (id) => {
     },
   });
 
-  return file.parentId;
+  return file;
 };

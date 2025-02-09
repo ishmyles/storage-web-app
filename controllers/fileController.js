@@ -17,7 +17,7 @@ export const displayAddFileForm = async (req, res) => {
   });
 };
 
-export const addNewFile = async (req, res) => {
+export const addNewFile = async (req, res, next) => {
   const { folderId } = req.params;
   const { originalname, size, path, mimetype } = req.file;
   const { username } = req.user;
@@ -59,7 +59,7 @@ export const displayFileInfo = async (req, res, next) => {
   });
 };
 
-export const displayUpdateFilenameForm = async (req, res) => {
+export const displayUpdateFilenameForm = async (req, res, next) => {
   const { fileId } = req.params;
   const fileData = await getFileData(fileId);
 
@@ -74,7 +74,7 @@ export const displayUpdateFilenameForm = async (req, res) => {
   });
 };
 
-export const updateFilename = async (req, res) => {
+export const updateFilename = async (req, res, next) => {
   const { fileId } = req.params;
   const { filename } = req.body;
   const errors = validationResult(req);
@@ -98,9 +98,9 @@ export const updateFilename = async (req, res) => {
   return res.redirect(`/files/${file.id}`);
 };
 
-export const deleteFile = async (req, res) => {
-  const folderId = await deleteFileData(req.params.fileId);
+export const deleteFile = async (req, res, next) => {
+  const file = await deleteFileData(req.params.fileId);
 
-  if (!folderId) return next(Error("The was a problem deleting your file."));
-  return res.redirect(`/folders/${folderId}`);
+  if (!file) return next(Error("The was a problem deleting your file."));
+  return res.redirect(`/folders/${file.parentId}`);
 };

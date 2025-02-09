@@ -16,7 +16,10 @@
         <ul>
             <li><a href="/folders/<%= locals.currentFolder.id %>/update">Update Foldername</a></li>
             <li><a href="/folders/<%= locals.currentFolder.id %>/new">Add Folder</a></li>
-            <li><a href="/files/<%= locals.currentFolder.id %>/new">Add Folder</a></li>
+            <li><a href="/files/<%= locals.currentFolder.id %>/new">Add File</a></li>
+            <form action="/folders/<%= locals.currentFolder.id %>/delete" method="post" style="display: block; margin-top: 10px; margin-left: 0;">
+                <button type="submit">Delete</button>
+            </form>
         </ul>
     <% } %>
     <% if (locals.folders) {%>
