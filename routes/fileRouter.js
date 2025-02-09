@@ -10,24 +10,40 @@ import {
   updateFilename,
 } from "../controllers/fileController.js";
 import { filenameValidator } from "../utils/formvalidators.js";
-import { isAuthenticated } from "../utils/middleware.js";
+import {
+  isAuthenticated,
+  isFileOwner,
+  isFolderOwner,
+} from "../utils/middleware.js";
 
 const fileRouter = Router();
 
-fileRouter.get("/new", isAuthenticated, asyncWrapper(displayAddFileForm));
+fileRouter.get(
+  "/:fileId",
+  isAuthenticated,
+  isFileOwner,
+  asyncWrapper(displayFileInfo)
+);
+
+fileRouter.get(
+  "/:folderId/new",
+  isAuthenticated,
+  isFolderOwner,
+  asyncWrapper(displayAddFileForm)
+);
 
 fileRouter.post(
-  "/new",
+  "/:folderId/new",
   isAuthenticated,
+  isFolderOwner,
   upload.single("upload_file"),
   asyncWrapper(addNewFile)
 );
 
-fileRouter.get("/:fileId", isAuthenticated, asyncWrapper(displayFileInfo));
-
 fileRouter.get(
   "/:fileId/update",
   isAuthenticated,
+  isFileOwner,
   asyncWrapper(displayUpdateFilenameForm)
 );
 
@@ -35,9 +51,15 @@ fileRouter.post(
   "/:fileId/update",
   filenameValidator,
   isAuthenticated,
+  isFileOwner,
   asyncWrapper(updateFilename)
 );
 
-fileRouter.post("/:fileId/delete", isAuthenticated, asyncWrapper(deleteFile));
+fileRouter.post(
+  "/:fileId/delete",
+  isAuthenticated,
+  isFileOwner,
+  asyncWrapper(deleteFile)
+);
 
 export default fileRouter;

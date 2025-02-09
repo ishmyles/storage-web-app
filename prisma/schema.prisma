@@ -27,9 +27,10 @@ model Folder {
 }
 
 model File {
-  id       Int      @id @default(autoincrement())
+  id       String   @id @default(uuid())
   folderId String
   name     String
+  fileType String
   size     Int
   filePath String
   addedAt  DateTime @default(now())

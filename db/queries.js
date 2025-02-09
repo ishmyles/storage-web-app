@@ -99,3 +99,68 @@ export const deleteFolderData = async (id) => {
   });
   console.log(folder);
 };
+
+export const createFile = async ({
+  name,
+  fileType,
+  size,
+  filePath,
+  folderId,
+  ownerId,
+}) => {
+  const file = await prisma.file.create({
+    data: {
+      name: name,
+      fileType: fileType,
+      size: size,
+      filePath: filePath,
+      folderId: folderId,
+      ownerId: ownerId,
+    },
+  });
+
+  return file;
+};
+
+export const getFileData = async (id) => {
+  const file = await prisma.file.findUnique({
+    where: {
+      id: id,
+    },
+  });
+
+  return file;
+};
+
+export const updateFile = async (id, updatedName) => {
+  const file = await prisma.file.update({
+    where: {
+      id: id,
+    },
+    data: {
+      name: updatedName,
+    },
+  });
+  console.log(file);
+  return file;
+};
+
+export const getFileOwner = async (id) => {
+  const file = await prisma.file.findUnique({
+    where: {
+      id: id,
+    },
+  });
+
+  return file ? file.ownerId : null;
+};
+
+export const deleteFileData = async (id) => {
+  const file = await prisma.file.delete({
+    where: {
+      id: id,
+    },
+  });
+
+  return file.parentId;
+};

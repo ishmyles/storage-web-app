@@ -18,16 +18,6 @@
                     <% }); %>
                 </ul>
             <% } %>
-            <% if (locals.folders) {%>
-                <div class="form-row">
-                    <label for="parent_folder">Select Folder:</label>
-                    <select name="parent_folder" id="parent_folder">
-                        <%  locals.folders.forEach(folder => { %>
-                            <option value="<%= folder.id %>"><%= folder.name %></option>
-                        <% }); %>
-                    </select>
-                </div>
-            <% } %>
             <div class="form-row">
                 <label for="upload_file">Attach file:</label>
                 <input type="file" name="upload_file" id="upload_file">
@@ -45,7 +35,11 @@
             <% } %>
             <div class="form-row">
                 <label for="<%= locals.type %>"><%= locals.type %></label>
-                <input type="text" name="<%= locals.type %>" id="<%= locals.type %>" value="<%= locals.foldername %>">
+                <% if (locals.foldername) { %>
+                    <input type="text" name="<%= locals.type %>" id="<%= locals.type %>" value="<%= locals.foldername %>">
+                <% } else { %>
+                    <input type="text" name="<%= locals.type %>" id="<%= locals.type %>" value="<%= locals.filename %>">
+                <% } %>
             </div>
             <% if (locals.title === "Add") { %>
                 <button type="submit">Add</button>
