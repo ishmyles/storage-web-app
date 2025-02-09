@@ -104,3 +104,12 @@ export const deleteFile = async (req, res, next) => {
   if (!file) return next(Error("The was a problem deleting your file."));
   return res.redirect(`/folders/${file.parentId}`);
 };
+
+export const downloadFile = async (req, res, next) => {
+  const { fileId } = req.params;
+
+  const file = await getFileData(fileId);
+
+  if (!file) return next(Error("Error retrieving file."));
+  return res.download(file.filePath, `download.${file.fileType}`);
+};

@@ -7,6 +7,7 @@ import {
   displayAddFileForm,
   displayFileInfo,
   displayUpdateFilenameForm,
+  downloadFile,
   updateFilename,
 } from "../controllers/fileController.js";
 import { filenameValidator } from "../utils/formvalidators.js";
@@ -60,6 +61,13 @@ fileRouter.post(
   isAuthenticated,
   isFileOwner,
   asyncWrapper(deleteFile)
+);
+
+fileRouter.get(
+  "/:fileId/download",
+  isAuthenticated,
+  isFileOwner,
+  asyncWrapper(downloadFile)
 );
 
 export default fileRouter;
