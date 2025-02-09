@@ -9,13 +9,6 @@ export const createUser = async ({ username, password }) => {
   bcrypt.hash(password, _SALT, async (err, hash) => {
     if (err) throw Error("Something went wrong signing you up.");
 
-    // await prisma.user.create({
-    //   data: {
-    //     username: username,
-    //     password: hash,
-    //   },
-    // });
-
     await prisma.folder.create({
       data: {
         name: "root",
@@ -57,7 +50,8 @@ export const createFolder = async ({ parentId, name, ownerId }) => {
       ownerId: ownerId,
     },
   });
-  console.log(folder);
+
+  return folder;
 };
 
 export const updateFolder = async ({ id, name }) => {
@@ -69,7 +63,8 @@ export const updateFolder = async ({ id, name }) => {
       name: name,
     },
   });
-  console.log(folder);
+
+  return folder;
 };
 
 export const getFolderData = async (id) => {
@@ -97,7 +92,6 @@ export const deleteFolderData = async (id) => {
       id: id,
     },
   });
-  console.log(folder);
 };
 
 export const createFile = async ({
@@ -141,7 +135,7 @@ export const updateFile = async (id, updatedName) => {
       name: updatedName,
     },
   });
-  console.log(file);
+
   return file;
 };
 

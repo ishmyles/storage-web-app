@@ -13,6 +13,7 @@ export const displayAddFileForm = async (req, res) => {
     title: "Add",
     type: "file",
     route: `/files/${folderId}/new`,
+    prevFolder: folderId,
   });
 };
 
@@ -27,6 +28,7 @@ export const addNewFile = async (req, res) => {
       type: "file",
       route: `/files/${folderId}/new`,
       errors: [{ msg: "Attach a file to add" }],
+      prevFolder: folderId,
     });
   }
 
@@ -51,7 +53,10 @@ export const displayFileInfo = async (req, res, next) => {
 
   if (!fileData) return next(Error("File not found!"));
 
-  return res.render("fileInfo", { file: fileData });
+  return res.render("fileInfo", {
+    file: fileData,
+    prevFolder: fileData.folderId,
+  });
 };
 
 export const displayUpdateFilenameForm = async (req, res) => {
@@ -65,6 +70,7 @@ export const displayUpdateFilenameForm = async (req, res) => {
     type: "filename",
     route: `/files/${req.params.fileId}/update`,
     filename: fileData.name,
+    prevFolder: fileData.folderId,
   });
 };
 
@@ -83,6 +89,7 @@ export const updateFilename = async (req, res) => {
       route: `/files/${req.params.fileId}/update`,
       errors: errors.array(),
       filename: fileData.name,
+      prevFolder: fileData.folderId,
     });
   }
   const file = await updateFile(fileId, filename);

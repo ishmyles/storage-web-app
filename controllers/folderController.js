@@ -12,6 +12,7 @@ export const displayUserFolders = async (req, res) => {
 
   return res.render("folderFileView", {
     folders: folders,
+    prevFolder: folders.parentId,
   });
 };
 
@@ -19,75 +20,88 @@ export const displayFolderContents = async (req, res) => {
   const folder = await getFolderData(req.params.folderId);
 
   return res.render("folderFileView", {
+    currentFolder: folder,
     folders: folder.subfolders,
     files: folder.files,
+    prevFolder: folder.parentId,
   });
 };
 
 export const displayNewFolderForm = async (req, res) => {
+  const parentId = req.params.folderId;
+
   return res.render("folderFile", {
     title: "Add",
     type: "foldername",
-    route: `/folders/${req.params.folderId}/new`,
+    route: `/folders/${parentId}/new`,
   });
 };
 
 export const createNewFolder = async (req, res) => {
+  const parentId = req.params.folderId;
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
     return res.render("folderFile", {
       title: "Add",
       type: "foldername",
-      route: `/folders/${req.params.folderId}/new`,
+      route: `/folders/${parentId}/new`,
+      prevFolder: parentId,
       errors: errors.array(),
     });
   }
 
   const input = {
-    parentId: req.params.folderId,
+    parentId: parentId,
     name: req.body.foldername,
     ownerId: req.user.username,
   };
-  // TODO: return folderId to render page
-  console.log(input);
-  await createFolder(input);
-  return res.send("TODO: Form input to be saved to DB");
+
+  const folder = await createFolder(input);
+
+  if (!folder) return next(Error("There was an issue updating your folder."));
+  return res.redirect(`/folders/${folder.id}`);
 };
 
 export const displayUpdateFolderForm = async (req, res) => {
-  const folder = await getFolderData(req.params.folderId);
+  const parentId = req.params.folderId;
+  const folder = await getFolderData(parentId);
 
   return res.render("folderFile", {
     title: "Update",
     type: "foldername",
-    route: `/folders/${req.params.folderId}/update`,
+    route: `/folders/${parentId}/update`,
     foldername: folder.name,
+    prevFolder: parentId,
   });
 };
 
 export const updateFolderName = async (req, res) => {
+  const parentId = req.params.folderId;
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
     return res.render("folderFile", {
       title: "Update",
       type: "foldername",
-      route: `/folders/${req.params.folderId}/update`,
+      route: `/folders/${parentId}/update`,
       errors: errors.array(),
+      prevFolder: parentId,
     });
   }
 
   const input = {
-    id: req.params.folderId,
+    id: parentId,
     name: req.body.foldername,
   };
 
-  await updateFolder(input);
-  return res.send("TODO: Form input to change folder name");
+  const folder = await updateFolder(input);
+
+  if (!folder) return next(Error("There was an issue updating your folder."));
+  return res.redirect(`/folder/${folder.id}`);
 };
 
 export const deleteFolder = async (req, res) => {
   await deleteFolderData(req.params.id);
-  res.send("TODO: Delete folder from DB");
+  return res.redirect("/folders");
 };

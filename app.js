@@ -11,6 +11,7 @@ import folderRouter from "./routes/folderRouter.js";
 import fileRouter from "./routes/fileRouter.js";
 import db from "./db/poolConnection.js";
 import passportConfig from "./config/passport.js";
+import { isAuthenticated } from "./utils/middleware.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -49,11 +50,12 @@ app.use("/signup", signupController);
 app.use("/folders", folderRouter);
 app.use("/files", fileRouter);
 
-app.get("/", (req, res) => res.render("index"));
+app.get("/", isAuthenticated, (req, res) => res.render("index"));
 
 app.post("/logout", (req, res) => {
   req.logout((err) => {
     if (err) return next(err);
+    res.clearCookie("sid", { path: "/" });
     return res.status(302).redirect("/");
   });
 });
