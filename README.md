@@ -34,7 +34,6 @@ The repository contains a simple storage app demonstrating use of authentication
    ```env
     PORT=3000
     STORAGE_FOLDER= <Add destination folder for multer to save files locally>
-    DB_STRING="postgres://<DB_USERNAME>:<PASSWORD>@localhost:5432/<DB_NAME>"
     COOKIE_SECRET= <Enter a password>
     SALT=10
     DATABASE_URL="postgres://<DB_USERNAME>:<PASSWORD>@localhost:5432/<DB_NAME>"
