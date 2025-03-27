@@ -38,14 +38,6 @@ The repository contains a simple storage app demonstrating use of authentication
     COOKIE_SECRET= <Enter a password>
     SALT=10
     DATABASE_URL="postgres://<DB_USERNAME>:<PASSWORD>@localhost:5432/<DB_NAME>"
-
-    PORT=3000
-    MEMBER_SECRET= <Enter a password>
-    ADMIN_SECRET= <Enter another password>
-    DB_CONN="postgres://<DB_USERNAME>:<PASSWORD>@localhost:5432/<DB_NAME>"
-    COOKIE_SECRET= <Enter another password>
-    SALT_KEY=10
-
    ```
 
 4. **Start the application**:
