@@ -2,10 +2,11 @@
   "name": "storage-web-app",
   "version": "1.0.0",
   "description": "A simple storage app demonstrating use of authentication, file uploading &amp; Prisma ORM",
-  "main": "index.js",
+  "main": "app.js",
   "private": true,
   "type": "module",
   "scripts": {
+    "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
