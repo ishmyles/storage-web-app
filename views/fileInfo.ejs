@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title><%= locals.file.name %></title>
+    <title><%= locals.file.name %></title>
+    <link rel="stylesheet" href="/styles/fileInfo.css">
 </head>
 <body>
     <%- include('partials/navbar') %>
@@ -11,6 +12,7 @@
         <a href="/folders/<%= locals.prevFolder %>">Back</a>
     <% } %>
     <h1><%= locals.file.name %></h1>
+    <img src="<%= locals.file.filePath %>" alt="">
     <p><b>Filetype: </b>.<%= locals.file.fileType %></p>
     <p><b>Size: </b><%= locals.file.size / 1000 %> mb</p>
     <a href="/files/<%= locals.file.id %>/update">Update</a>
