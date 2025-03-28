@@ -1,6 +1,6 @@
 import bcrypt from "bcryptjs";
 import { PrismaClient } from "@prisma/client";
-import { console } from "inspector";
+import { cloudinary } from "../config/cloudinary.js";
 
 const _SALT = Number(process.env.SALT);
 
@@ -156,6 +156,9 @@ export const deleteFileData = async (id) => {
       id: id,
     },
   });
+
+  const filename = file.filePath.split(/(?=StorageApp\/)/)[1].split(".")[0];
+  await cloudinary.uploader.destroy(filename);
 
   return file;
 };

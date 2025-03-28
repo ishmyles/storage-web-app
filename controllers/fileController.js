@@ -51,6 +51,10 @@ export const displayFileInfo = async (req, res, next) => {
   const { fileId } = req.params;
   const fileData = await getFileData(fileId);
 
+  const fileLocation = fileData.filePath.split(/(?<=upload\/)/);
+  fileData.downloadPath =
+    fileLocation[0] + "fl_attachment:download/" + fileLocation[1];
+
   if (!fileData) return next(Error("File not found!"));
 
   return res.render("fileInfo", {
@@ -105,11 +109,13 @@ export const deleteFile = async (req, res, next) => {
   return res.redirect(`/folders/${file.parentId}`);
 };
 
-export const downloadFile = async (req, res, next) => {
-  const { fileId } = req.params;
+// LOCAL FILE PATH
+// export const downloadFile = async (req, res, next) => {
+//   const { fileId } = req.params;
 
-  const file = await getFileData(fileId);
+//   const file = await getFileData(fileId);
+//   console.log(file);
 
-  if (!file) return next(Error("Error retrieving file."));
-  return res.download(file.filePath, `download.${file.fileType}`);
-};
+//   if (!file) return next(Error("Error retrieving file."));
+//   return res.download(file.filePath, `download.${file.fileType}`);
+// };

@@ -14,6 +14,7 @@
     <h1><%= locals.title %> <%= locals.type %></h1>
     <% if (locals.title === "Add" && locals.type === "file") { %>
         <form action="<%= locals.route %>" enctype="multipart/form-data" method="post">
+            <p>Currently supports jpeg & png files only.</p>
             <% if (locals.errors) { %>
                 <ul>
                     <% errors.forEach(err => { %>

@@ -10,13 +10,14 @@
     <% if (locals.prevFolder) { %>
         <a href="/folders/<%= locals.prevFolder %>">Back</a>
     <% } %>
-    <form action="/files/<%= locals.file.id %>/delete" method="post" style="display: block; margin-top: 10px; margin-left: 0;">
-        <button type="submit">Delete</button>
-    </form>
     <h1><%= locals.file.name %></h1>
     <p><b>Filetype: </b>.<%= locals.file.fileType %></p>
     <p><b>Size: </b><%= locals.file.size / 1000 %> mb</p>
     <a href="/files/<%= locals.file.id %>/update">Update</a>
-    <a href="/files/<%= locals.file.id %>/download">Download</a>
+    <!-- <a href="/files/<%= locals.file.id %>/download">Download</a> -->
+    <a href="<%= locals.file.downloadPath %>">Download</a> 
+    <form action="/files/<%= locals.file.id %>/delete" method="post" style="display: block; margin-top: 10px; margin-left: 0;">
+        <button type="submit">Delete</button>
+    </form>
 </body>
 </html>

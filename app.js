@@ -64,7 +64,8 @@ app.get("*", (req, res) => res.send("404 Error: File not found"));
 
 app.use((err, req, res, next) => {
   console.error(err);
-  res.status(500).send("Internal Server Error: Something went wrong!");
+  if (err.message) return res.status(500).send(err.message);
+  return res.status(500).send("Internal Server Error: Something went wrong!");
 });
 
 app.listen(_PORT, () => console.log(`Server now listening at port ${_PORT}`));

@@ -7,7 +7,7 @@ import {
   displayAddFileForm,
   displayFileInfo,
   displayUpdateFilenameForm,
-  downloadFile,
+  // downloadFile, // For local use
   updateFilename,
 } from "../controllers/fileController.js";
 import { filenameValidator } from "../utils/formvalidators.js";
@@ -63,11 +63,12 @@ fileRouter.post(
   asyncWrapper(deleteFile)
 );
 
-fileRouter.get(
-  "/:fileId/download",
-  isAuthenticated,
-  isFileOwner,
-  asyncWrapper(downloadFile)
-);
+// Local route to download
+// fileRouter.get(
+//   "/:fileId/download",
+//   isAuthenticated,
+//   isFileOwner,
+//   asyncWrapper(downloadFile)
+// );
 
 export default fileRouter;
