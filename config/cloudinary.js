@@ -1,5 +1,7 @@
-import { v2 as cloudinary } from "cloudinary";
+import { v2 } from "cloudinary";
 import { CloudinaryStorage } from "multer-storage-cloudinary";
+
+export const cloudinary = v2;
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -7,12 +9,10 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_SECRET,
 });
 
-const storage = new CloudinaryStorage({
+export const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
     folder: "StorageApp",
     allowed_formats: ["jpeg", "jpg", "png"],
   },
 });
-
-export default storage;
