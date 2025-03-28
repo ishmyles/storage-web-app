@@ -2,6 +2,8 @@
 
 The repository contains a simple storage app demonstrating use of authentication, file uploading &amp; Prisma ORM.
 
+- Check out the [live preview](https://storage-web-app-production.up.railway.app/)
+
 ## Technologies Used
 
 - Node
