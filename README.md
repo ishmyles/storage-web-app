@@ -35,9 +35,9 @@ The repository contains a simple storage app demonstrating use of authentication
 
    ```env
     PORT=3000
-    STORAGE_FOLDER= <Add destination folder for multer to save files locally>
-    COOKIE_SECRET= <Enter a password>
-    SALT=10
+    STORAGE_FOLDER="<Add destination folder for multer to save files locally>"
+    COOKIE_SECRET="<Enter a password>"
+    SALT="<Enter salt>"
     DATABASE_URL="postgres://<DB_USERNAME>:<PASSWORD>@localhost:5432/<DB_NAME>"
    ```
 
@@ -54,5 +54,20 @@ The repository contains a simple storage app demonstrating use of authentication
    Press Ctrl + C to terminate app.
 
 ## App Design
+
+### Requirements
+
+- Users MUST be authenticated to perform CRUD functionality for folders/files
+- Users can create folders
+- Users can add/upload files
+- Users can view folders & their contents
+- Users can view file details (eg. name, file size, uploadedAt)
+- Users can download the uploaded file
+
+### ERD
+
+![](./DESIGN_FILES/StorageAppERD.jpg)
+
+### Written Design
 
 ![](./DESIGN_FILES/FileStorageAppDesign.jpg)
